@@ -1,9 +1,9 @@
 name: Run Pyrogram Bot
 
 on:
-  workflow_dispatch:   # manually run karne ke liye
+  workflow_dispatch:
   push:
-    branches: [ "main" ]  # jab main branch me code push hoga
+    branches: [ "main" ]
 
 jobs:
   run-bot:
@@ -23,8 +23,8 @@ jobs:
 
     - name: Run Bot
       env:
-        API_ID: ${{ secrets.API_ID }}
-        API_HASH: ${{ secrets.API_HASH }}
-        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-        ADMIN: ${{ secrets.ADMIN }}
+        API_ID: 1234567               # <-- apna API_ID yahan likho
+        API_HASH: your_api_hash_here  # <-- apna API_HASH yahan likho
+        BOT_TOKEN: your_bot_token_here # <-- apna BOT_TOKEN yahan likho
+        ADMIN: 7409967984             # <-- apna Telegram User ID yahan likho
       run: python bot.py
