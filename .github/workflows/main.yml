@@ -1,22 +1,30 @@
-{
-  "name": "ChatGPT Bot Workspace",
-  "image": "mcr.microsoft.com/devcontainers/python:3.10",
+name: Run Pyrogram Bot
 
-  "features": {
-    "ghcr.io/devcontainers/features/common-utils:2": {}
-  },
+on:
+  workflow_dispatch:   # manually run karne ke liye
+  push:
+    branches: [ "main" ]  # jab main branch me code push hoga
 
-  "postCreateCommand": "pip install -r requirements.txt",
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
 
-  "customizations": {
-    "vscode": {
-      "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python"
-      },
-      "extensions": [
-        "ms-python.python",
-        "ms-python.vscode-pylance"
-      ]
-    }
-  }
-}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run Bot
+      env:
+        API_ID: ${{ secrets.API_ID }}
+        API_HASH: ${{ secrets.API_HASH }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        ADMIN: ${{ secrets.ADMIN }}
+      run: python bot.py
